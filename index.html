@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+
+<html dir="ltr" lang="en">
+    <head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>Your Guide to Safe Cyber Behaviors</title>
+<style>
+    :root{ --bg:#dbeafe; --text:#0b1220; --muted:#334155; --border:#c7d2fe; --card:#ffffff; --accent:#1e40af }
+    *{box-sizing:border-box}
+body{
+  margin:0;
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial;
+  background:linear-gradient(160deg,#dbeafe,#c7d2fe,#e2e8f0);
+  color:var(--text);
+}
+    header{position:sticky; top:0; background:#ffffffcc; backdrop-filter: blur(6px); border-bottom:1px solid var(--border); z-index:10}
+    .container{max-width:1000px; margin:0 auto; padding:18px}
+    .row{display:flex; align-items:center; justify-content:space-between; gap:12px}
+    .brand{display:flex; align-items:center; gap:12px}
+    .logo{width:64px;height:64px;border-radius:12px;display:grid;place-items:center;background:#e0e7ff;border:1px solid var(--border);font-size:30px}
+    .controls{display:flex; gap:8px; flex-wrap:wrap}
+    .btn{border:1px solid var(--border); background:#fff; color:var(--text); padding:8px 12px; border-radius:10px; cursor:pointer; font-weight:700}
+    .btn.active{border-color:#94a3b8}
+
+    main{padding:16px 0}
+    .hero{background:var(--card); border:1px solid var(--border); border-radius:16px; padding:18px; margin-bottom:16px}
+    .hero h1{margin:0 0 8px 0; font-size:clamp(20px,3vw,30px)}
+    .muted{color:var(--muted)}
+
+    section.beh{background:var(--card); border:1px solid var(--border); border-radius:16px; padding:18px; margin:14px 0}
+    section.beh h2{margin:0 0 10px 0; font-size:22px; display:flex; align-items:center; gap:.5em}
+    .icon{width:22px; height:22px; display:inline-block; vertical-align:middle; color:#0f172a}
+    h3{margin:14px 0 8px 0; font-size:18px}
+    ul{margin:0; padding-inline-start:20px}
+    li{margin:6px 0; line-height:1.7}
+
+    .closing{margin:22px 0 8px; background:#fff; border:1px dashed var(--border); border-radius:14px; padding:14px; text-align:center; font-weight:800; color:#0f172a}
+
+    /* Ensure text stays readable in night mode */
+    body[data-theme="night"] .hero,
+    body[data-theme="night"] section.beh,
+    body[data-theme="night"] footer { color: var(--text); }
+    body[data-theme="night"] .btn { background:#0f2b5f; border-color:#20325c; color: var(--text); }
+    body[data-theme="night"] .logo { background:#163463; }
+    .foot{display:flex; align-items:center; justify-content:space-between; gap:12px}
+    .nca{display:flex; align-items:center; gap:10px}
+    .nca img{height: 120px; width: auto}
+    .nca #footnote{font-size:12px; line-height:1.4;}
+
+    /* Night theme (navy) */
+    body[data-theme="night"]{ --bg:#0b1f48; --text:#e7ecf7; --muted:#c3cbe0; --border:#20325c; --card:#0f2b5f; color: var(--text); color-scheme: dark; background:linear-gradient(160deg,#0b1f48,#0f2b5f,#0b1f48) }
+    body[data-theme="night"] .closing{ background:#0b1f48; color:#e7ecf7; border-color:#20325c }
+    body[data-theme="night"] header{ background:#0f255dcc; color: var(--text); }
+    body[data-theme="night"]{ background:linear-gradient(160deg,#0b1f48,#0f2b5f,#0b1f48) }
+
+    /* LTR support */
+    html[dir="ltr"] ul{padding-inline-start:22px}
+    .edit-outline{outline:2px dashed #94a3b8; outline-offset:4px; border-radius:8px;}
+    body[data-edit-mode="on"] .btn#edit-toggle{border-color:#f59e0b}
+
+    /* ✅ Checkbox + final CTA styles */
+    .checkline{
+      margin-top:14px;
+  padding:10px 12px;
+  border:1px solid var(--border);
+  border-radius:12px;
+  background:#dcfce7; /* ✅ أخضر فاتح */
+  font-weight:800;
+  display:flex;
+  align-items:center;
+  gap:10px;
+    }
+    .checkline input{ transform: scale(1.1); }
+
+    .notice{
+      text-align:center;
+      font-weight:800;
+      margin:18px 0 10px;
+      line-height:1.6;
+    }
+    .notice .important{
+      display:block;
+      margin-top:8px;
+      color:#b45309;
+      font-weight:900;
+    }
+    .nextBox{
+      display:none;
+      text-align:center;
+      background:#ffffff;
+      border:1px solid var(--border);
+      border-radius:16px;
+      padding:22px;
+      margin:16px 0 22px;
+      box-shadow:0 10px 30px rgba(0,0,0,.08);
+    }
+    .nextBtn{
+      display:inline-block;
+      margin-top:12px;
+      background:#16a34a;
+      color:#fff;
+      padding:14px 28px;
+      border-radius:999px;
+      font-weight:900;
+      text-decoration:none;
+    }
+
+    /* ✅ NEW: step-by-step (only one behaviour visible at a time) */
+    .beh-step { display:none; }
+/* ✅ Waiting message (hourglass) */
+.waitline{
+  margin-top:14px;
+  padding:10px 12px;
+  border:1px solid var(--border);
+  border-radius:12px;
+  background:#fff7ed; /* خلفية هادئة */
+  font-weight:800;
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.waitline .hourglass{
+  font-size:18px;
+  line-height:1;
+  display:inline-block;
+  animation: flip 1.2s infinite ease-in-out;
+}
+
+@keyframes flip{
+  0%   { transform: rotate(0deg); }
+  50%  { transform: rotate(180deg); }
+  100% { transform: rotate(360deg); }
+}
+</style>
+</head>
+<body>
+<header>
+<div class="container row">
+<div class="brand">
+<div class="logo">🛡️</div>
+<div>
+<div class="muted" id="subtitle" style="font-size:12px"></div>
+<div id="title-en" style="font-weight:800; font-size:18px;">Your Guide to Safe Cyber Behaviors</div></div>
+</div>
+<div class="controls">
+</div>
+    </div>
+</header>
+<main class="container">
+
+<div class="hero" id="hero-en"><h1>Your cybersecurity starts from your safe practices and habits!</h1><p class="muted">Five cyber practices that help keep you safe across online services and digital environments.<br/>Learn why each practice matters, what are practical advice to apply it, and common mistakes to avoid.</p></div>
+
+
+<!-- English Content -->
+<div dir="ltr" id="content-en" lang="en">
+
+<section class="beh beh-step beh-step-en" data-step="1">
+<h2>
+<span aria-hidden="true" class="icon">
+<svg fill="currentColor" height="22" viewbox="0 0 24 24" width="22"><path d="M12 1a5 5 0 00-5 5v3H6a2 2 0 00-2 2v8a2 2 0 002 2h12a2 2 0 002-2v-8a2 2 0 00-2-2h-1V6a5 5 0 00-5-5zm3 8H9V6a3 3 0 116 0v3z"></path></svg>
+</span>
+          Using Strong Passwords
+        </h2>
+<h3>Why it matters</h3>
+<ul>
+<li>Passwords prevent outsiders from accessing your online accounts.</li>
+<li>Strong passwords protect your accounts.</li>
+</ul>
+<h3>Practical advice</h3>
+<ul>
+<li>Use a long rather than a complex password.</li>
+<li>A strong password is made up of three random words e.g., Cup Fish Baraccuda.</li>
+<li>If the three random words don’t meet website requirements, you can start the words with an upper-case letter and then append your favourite number and “?”.</li>
+<li>Choose passwords that are easy for you to remember but unusual and hard for others to guess.</li>
+<li>Use a different password for each of your online accounts.</li>
+<li>Do not share your passwords with others or leave them where others can see them.</li>
+</ul>
+<h3>Common mistakes</h3>
+<ul>
+<li> Using guessable passwords like your birthdate, phone number, or pet name as a password.</li>
+<li>Reusing the same password on all your accounts.</li>
+</ul>
+
+  <div class="waitline" aria-live="polite">
+  <span class="hourglass" aria-hidden="true">⏳</span>
+  <span>Please read the text carefully and wait until the checkbox appears to proceed to the next behaviour.</span>
+</div>
+
+<div class="checkline">
+  <input type="checkbox" class="beh-check beh-check-en" id="en-b1" data-lang="en" data-step="1">
+  <label for="en-b1">After finishing reading this section, please tick this box to move to the next behaviour</label>
+</div>
+</section>
+
+<section class="beh beh-step beh-step-en" data-step="2">
+<h2>
+<span aria-hidden="true" class="icon">
+<svg fill="currentColor" height="22" viewbox="0 0 24 24" width="22"><path d="M10.59 13.41L9.17 12l4.24-4.24a3 3 0 114.24 4.24l-1.41 1.41-1.41-1.41 1.41-1.41a1 1 0 10-1.41-1.41L8.76 13.05a3 3 0 01-4.24-4.24l1.41-1.41 1.41 1.41-1.41 1.41a1 1 0 101.41 1.41l3.66-3.66 1.41 1.41-3.66 3.66a3 3 0 004.24 4.24l4.24-4.24 1.41 1.41-4.24 4.24a5 5 0 01-7.07-7.07l4.24-4.24 1.41 1.41-4.24 4.24"></path></svg>
+</span>
+        Not Falling for a Phishing Scam (Phishing Prevention)       
+      </h2>
+<h3>Why it matters</h3>
+<ul>
+<li> You can protect yourself from data theft and device compromise.</li>
+<li> You can protect yourself from fraud.</li>
+</ul>
+<h3>Practical advice</h3>
+<ul>
+<h4>(If the message doesn’t pass these tests, don’t click) </h4>
+<li>Slow down for 5 seconds before clicking links to look for red flags in the language used (rushing/scaring/ rewards/ urgency/emotional language). </li>
+<li>Verify the sender when you receive a message. Ask yourself: (Do you know him/her?, Did you expect this message?, Can you contact the sender to check using a different channel (e.g., SMS, WhatsApp)?).</li>
+<li>Do not provide your personal information (e.g., name, birthdate, ID, passwords, OTP, bank details), just because someone is asking. </li>
+<li>If a message seems to be from an official entity, visit their official website and consider contacting them via that website to confirm.</li>
+<li>Still not sure?,  You can use trusted online security tools like iBarry security platform (https://www.ibarry.ch/en/security-checks/ ) or VirusTotal ( https://www.virustotal.com/gui/home/upload ) to verify links in messages.</li>
+<li>You can also use the official reporting service offered by the UK (NCSC) to report suspicious messages via report@phishing.gov.uk  or by texting 7726.</li>
+<li>Already clicked on a suspicious link or think you have been hacked?, Report it to the service provider and to https://www.reportfraud.police.uk/ . if you are in England, Wales or Northern Ireland call 0300 123 2040 to report . If you are in Scotland, report to Police Scotland by calling 101.</li>
+
+</ul>
+<h3>Common mistakes</h3>
+<ul>
+<li>Rushing to act on messages due to urgency or fear.</li>
+<li>Clicking on links in messages from unknown sources and disclosing personal information.</li>
+</ul>
+
+  <div class="waitline" aria-live="polite">
+  <span class="hourglass" aria-hidden="true">⏳</span>
+  <span>Please read the text carefully and wait until the checkbox appears to proceed to the next behaviour.</span>
+</div>
+
+<div class="checkline">
+  <input type="checkbox" class="beh-check beh-check-en" id="en-b2" data-lang="en" data-step="2">
+  <label for="en-b2">After finishing reading this section, please tick this box to move to the next behaviour</label>
+</div>
+</section>
+
+<section class="beh beh-step beh-step-en" data-step="3">
+<h2>
+<span aria-hidden="true" class="icon">
+<svg fill="currentColor" height="22" viewbox="0 0 24 24" width="22"><path d="M12 2a10 10 0 00-7.07 17.07l1.41-1.41A8 8 0 1120 12h2A10 10 0 0012 2zm-1 11.59l-2.29-2.3-1.42 1.42L11 16.41l6-6-1.41-1.41L11 13.59z"></path></svg>
+</span>
+          Using Two-Factor Authentication (2FA)
+        </h2>
+<h3>Why it matters</h3>
+<ul>
+
+<li>2FA  requires you to provide your password and then to engage in an extra step: e.g., providing a security code that is texted to your smartphone, or via an Authenticator app that you install.</li>
+<li>•	2FA gives you extra protection in case your password is guessed or stolen.</li>
+</ul>
+<h3>Practical advice</h3>
+<ul>
+<li>Use 2FA for any accounts where it is offered, especially high-value accounts (e.g., email, banking, government services). Check in the account’s security & privacy settings to enable it.</li>
+<li>Most service providers provide step-by-step (2FA adding) instructions for you to follow, review and follow them.</li>
+<li>You might be asked to install and use an Authenticator app (e.g., Google Authenticator or Microsoft Authenticator) to generate a one-time code when signing in, follow the required steps and install these apps.</li>
+</ul>
+<h3>Common mistakes</h3>
+<ul>
+<li>Giving your 2FA code to a hacker or untrusted person.</li>
+</ul>
+
+  <div class="waitline" aria-live="polite">
+  <span class="hourglass" aria-hidden="true">⏳</span>
+  <span>Please read the text carefully and wait until the checkbox appears to proceed to the next behaviour.</span>
+</div>
+
+<div class="checkline">
+  <input type="checkbox" class="beh-check beh-check-en" id="en-b3" data-lang="en" data-step="3">
+  <label for="en-b3">After finishing reading this section, please tick this box to move to the next behaviour</label>
+</div>
+</section>
+
+<section class="beh beh-step beh-step-en" data-step="4">
+<h2>
+<span aria-hidden="true" class="icon">
+<svg fill="currentColor" height="22" viewbox="0 0 24 24" width="22"><path d="M6 3h12a2 2 0 012 2v4a2 2 0 01-2 2H6a2 2 0 01-2-2V5a2 2 0 012-2zm0 10h12a2 2 0 012 2v4a2 2 0 01-2 2H6a2 2 0 01-2-2v-4a2 2 0 012-2zm6-9a3 3 0 100 6 3 3 0 000-6z"></path></svg>
+</span>
+Backing Up Important Data 
+        </h2>
+<h3>Why it matters</h3>
+<ul>
+<li>A backup is a copy of your important data so you can get your files back in case your computer dies or is hacked.</li>
+</ul>
+<h3>Practical advice</h3>
+<ul>
+<li>Back up your important data and files regularly using Cloud storage (e.g., Apple iCloud, Google Drive, or Microsoft OneDrive), or removable media (like an external hard drive) or both.</li>
+<li>When you choose to back up your data, find and follow the relevant backup instructions on the provider’s official website.</li>
+<li>Test your backups regularly and make sure they are restorable and haven’t been corrupted in some way.</li>
+</ul>
+<h3>Common mistakes</h3>
+<ul>
+<li>Not making backups.</li>
+</ul>
+
+  <div class="waitline" aria-live="polite">
+  <span class="hourglass" aria-hidden="true">⏳</span>
+  <span>Please read the text carefully and wait until the checkbox appears to proceed to the next behaviour.</span>
+</div>
+
+<div class="checkline">
+  <input type="checkbox" class="beh-check beh-check-en" id="en-b4" data-lang="en" data-step="4">
+  <label for="en-b4">After finishing reading this section, please tick this box to move to the next behaviour</label>
+</div>
+</section>
+
+<section class="beh beh-step beh-step-en" data-step="5">
+<h2>
+<span aria-hidden="true" class="icon">
+<svg fill="currentColor" height="22" viewbox="0 0 24 24" width="22"><path d="M12 2a10 10 0 1010 10h-2A8 8 0 1120 12h2A10 10 0 0012 2zm1 5h-2v6l5 3 .9-1.8-3.9-2.2V7z"></path></svg>
+</span>
+          Updating System, Software & Apps 
+        </h2>
+<h3>Why it matters</h3>
+<ul>
+<li> Updates are more secure versions of software that fix security vulnerabilities and enhance performance. </li>
+</ul>
+<h3>Practical advice</h3>
+<ul>
+<li>Option 1: Turn on 'automatic updates' in your device's settings. This takes all the effort out of keeping your system up to date.</li>
+<li>Option 2: Install updates as soon as they are released. </li>
+<li> Always install updates only from trusted and official sources. </li>
+<li>Avoid using devices that no longer receive updates (Update support for them has been discontinued).</li>
+</ul>
+<h3>Common mistakes</h3>
+<ul>
+<li>Delaying or ignoring system/app updates.</li>
+</ul>
+
+  <div class="waitline" aria-live="polite">
+  <span class="hourglass" aria-hidden="true">⏳</span>
+  <span>Please read the text carefully and wait until the checkbox appears to proceed to the next behaviour.</span>
+</div>
+
+<div class="checkline">
+  <input type="checkbox" class="beh-check beh-check-en" id="en-b5" data-lang="en" data-step="5">
+  <label for="en-b5">After finishing reading this section, please tick this box to move to the next behaviour</label>
+</div>
+
+
+</section>
+    </div>
+
+<!-- ✅ END EN: hidden until step 5 is checked -->
+<div id="endEn" style="display:none;">
+  <div class="closing">Stay mindful and safe!</div>
+
+  <div class="notice" id="noticeEn">
+    After reviewing the content of this page, please confirm below.
+  </div>
+
+  <div class="nextBox" id="nextBoxEn">
+
+    <label class="checkline" id="finalCheckLine">
+      <input type="checkbox" id="finalCheckEn">
+      I confirm that I have reviewed all five behaviours.
+    </label>
+
+    <div id="finalMessage" style="display:none; margin-top:20px; font-weight:800; line-height:1.7;">
+      IMPORTANT:<br>
+      To get paid, please complete the next section of the survey.<br><br>
+      To continue, click the “Next” button at the bottom of this page.<br><br>
+      Thanks
+    </div>
+
+  </div>
+</div>
+</main>
+
+<footer>
+<div class="container foot">
+<small class="muted">© 2026</small>
+<div class="nca">
+<small class="muted" id="footnote-en">These guidelines are based on materials from the UK National Cyber Security Centre (NCSC).</small></div>
+</div>
+</footer>
+
+<script>
+(function(){
+
+/* ===== إعدادات ===== */
+const TOTAL_STEPS = 5;
+const CHECK_DELAY = 60000; // 60 ثانية
+
+/* ===== participant_id ===== */
+const params = new URLSearchParams(window.location.search);
+const participantId = params.get('participant_id') || '';
+
+
+/* ===== تحويل وقت ===== */
+function msToMMSS(ms){
+  const totalSec = Math.max(0, Math.floor(ms / 1000));
+  const mm = String(Math.floor(totalSec / 60)).padStart(2,'0');
+  const ss = String(totalSec % 60).padStart(2,'0');
+  return `${mm}:${ss}`;
+}
+
+/* ===== العناصر ===== */
+const steps = [...document.querySelectorAll('.beh-step-en')];
+
+const endEn = document.getElementById('endEn');
+const nextBoxEn =
+document.getElementById('nextBoxEn');
+
+const finalCheckEn =
+document.getElementById('finalCheckEn');
+
+const finalMessage =
+document.getElementById('finalMessage');
+
+/* ===== الحالة ===== */
+
+let currentStep = 1;
+
+const stepStart = {};
+const stepTimes = {};
+let checkboxTimer = null;
+
+/* ===== إخفاء الكل ===== */
+function hideAll(){
+  steps.forEach(s => s.style.display = 'none');
+  endEn.style.display = 'none';
+  nextBoxEn.style.display = 'none';
+}
+
+/* ===== عرض السلوك ===== */
+function showStep(){
+  hideAll();
+
+  if(currentStep > TOTAL_STEPS){
+    const totalTime =
+      Object.values(stepTimes).reduce((a,b)=>a+b,0);
+
+    const q = new URLSearchParams();
+    if(participantId) q.set('participant_id', participantId);
+
+    /* Embedded Data (الوقت فقط) */
+    q.set('total_time', msToMMSS(totalTime));
+    q.set('t_b1', msToMMSS(stepTimes[1]||0));
+    q.set('t_b2', msToMMSS(stepTimes[2]||0));
+    q.set('t_b3', msToMMSS(stepTimes[3]||0));
+    q.set('t_b4', msToMMSS(stepTimes[4]||0));
+    q.set('t_b5', msToMMSS(stepTimes[5]||0));
+
+    endEn.style.display = 'block';
+
+nextBoxEn.style.display = 'block';
+
+    return;
+  }
+
+  const section = steps[currentStep-1];
+  section.style.display = 'block';
+
+  if(!stepStart[currentStep]){
+    stepStart[currentStep] = Date.now();
+  }
+
+  const checkline = section.querySelector('.checkline');
+const checkbox = section.querySelector('.beh-check');
+const waitline = section.querySelector('.waitline'); // ✅ NEW
+
+// في بداية السلوك: أظهر رسالة الانتظار + أخفِ مربع التحديد
+if (waitline) waitline.style.display = 'flex';
+checkline.style.display = 'none';
+checkbox.disabled = true;
+checkbox.checked = false;
+
+clearTimeout(checkboxTimer);
+checkboxTimer = setTimeout(()=>{
+  // بعد دقيقة: أخفِ رسالة الانتظار + أظهر مربع التحديد
+  if (waitline) waitline.style.display = 'none';
+  checkline.style.display = 'flex';
+  checkbox.disabled = false;
+}, CHECK_DELAY);
+}
+
+/* ===== checkbox ===== */
+document.querySelectorAll('.beh-check').forEach(cb=>{
+  cb.addEventListener('change', ()=>{
+    if(cb.disabled) return;
+
+    const step = Number(cb.dataset.step);
+    if(step !== currentStep) return;
+
+    stepTimes[step] = Date.now() - stepStart[step];
+    cb.disabled = true;
+
+    currentStep++;
+    showStep();
+  });
+});
+
+finalCheckEn.addEventListener('change', function(){
+
+  if(this.checked){
+
+    finalMessage.style.display = 'block';
+
+    window.parent.postMessage(
+      "WEBPAGE_FINISHED",
+      "*"
+    );
+
+  }
+
+});
+
+document.documentElement.lang = 'en';
+document.documentElement.dir = 'ltr';
+showStep();
+
+
+})();
+</script>
+
+</body>
+</html>
