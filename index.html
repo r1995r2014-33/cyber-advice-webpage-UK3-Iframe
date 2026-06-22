@@ -513,7 +513,17 @@ finalCheckEn.addEventListener('change', function(){
       "WEBPAGE_FINISHED",
       "*"
     );
+const totalTime = Object.values(stepTimes).reduce((a,b)=>a+b,0);
 
+window.parent.postMessage({
+  type: "WEBPAGE_TIMES",
+  total_time: msToMMSS(totalTime),
+  t_b1: msToMMSS(stepTimes[1] || 0),
+  t_b2: msToMMSS(stepTimes[2] || 0),
+  t_b3: msToMMSS(stepTimes[3] || 0),
+  t_b4: msToMMSS(stepTimes[4] || 0),
+  t_b5: msToMMSS(stepTimes[5] || 0)
+}, "*");
   }
 
 });
