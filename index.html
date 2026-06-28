@@ -509,10 +509,7 @@ finalCheckEn.addEventListener('change', function(){
 
     finalMessage.style.display = 'block';
 
-    window.parent.postMessage(
-      "WEBPAGE_FINISHED",
-      "*"
-    );
+    
 const totalTime = Object.values(stepTimes).reduce((a,b)=>a+b,0);
 
 window.parent.postMessage({
@@ -526,6 +523,10 @@ window.parent.postMessage({
 }, "*");
   }
 
+    window.parent.postMessage(
+      "WEBPAGE_FINISHED",
+      "*"
+    );
 });
 
 document.documentElement.lang = 'en';
